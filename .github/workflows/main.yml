@@ -1,0 +1,42 @@
+name: Quy Trinh DevOps Dau Tien Cua Vinh
+
+# 1. KHI NÀO CHẠY? (Trigger)
+# Kịch bản này sẽ chạy khi có hành động "push" vào nhánh "main"
+on:
+  push:
+    branches: [ "main" ]
+
+# 2. CHẠY CÁI GÌ? (Jobs)
+jobs:
+  # Đặt tên job này là "build-va-test"
+  build-va-test:
+    # Chạy trên máy ảo Ubuntu mới nhất do GitHub cung cấp
+    runs-on: ubuntu-latest
+
+    # 3. CÁC BƯỚC THỰC HIỆN (Steps)
+    steps:
+      # Bước 1: Lấy code từ kho về máy ảo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Bước 2: Giả lập cài đặt môi trường (ví dụ Node.js)
+      - name: Cai dat Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # Bước 3: Chạy thử lệnh Build
+      - name: Chay lenh Build
+        run: |
+          echo "Bat dau build phan mem..."
+          mkdir build_folder
+          touch build_folder/app.exe
+          echo "Da build xong! File app.exe da duoc tao."
+
+      # Bước 4: Chạy thử lệnh Test
+      - name: Chay lenh Test
+        run: |
+          echo "Dang chay Unit Test..."
+          # Giả vờ test mất 2 giây
+          sleep 2
+          echo "Test thanh cong! Khong co loi."
